@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Share+Tech+Mono&display=swap">
+<title>اختبر وعيك السيبراني | Cyber Shield</title>
+<style>
+:root{--bg:#030806;--panel:rgba(5,16,12,.92);--line:#0f4a33;--g:#00ff9c;--glow:rgba(0,255,156,.4);--bad:#ff3b4e;--tx:#f2f2f4;--mut:#9a9aa3;--ok:#00ff9c;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="dark"]{--bg:#030806}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(rgba(0,255,156,.045) 1px,transparent 1px) 0 0/36px 36px,linear-gradient(90deg,rgba(0,255,156,.045) 1px,transparent 1px) 0 0/36px 36px,radial-gradient(circle at 50% -10%,#00281a 0,var(--bg) 60%) fixed,var(--bg);color:var(--tx);font-family:"Cairo","Segoe UI",Tahoma,sans-serif;line-height:1.7;min-height:100vh}
+#rain{position:fixed;inset:0;width:100%;height:100%;z-index:0;opacity:.16;pointer-events:none}
+main{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:28px 18px 60px}
+header{text-align:center;padding:26px 0 18px}
+.logo{font-family:"Share Tech Mono",monospace;display:inline-block;font-weight:900;letter-spacing:6px;color:var(--g);text-shadow:0 0 18px var(--glow);border:1px solid var(--g);padding:2px 14px;border-radius:4px;direction:ltr}
+h1{font-size:clamp(28px,7vw,46px);margin:14px 0 6px;font-weight:900;text-shadow:0 0 28px var(--glow)}
+header p{color:var(--mut);margin:0}
+.bar{display:flex;gap:8px;margin:22px 0}
+.bar i{flex:1;height:5px;border-radius:3px;background:#222;transition:.4s}
+.bar i.on{background:var(--g);box-shadow:0 0 10px var(--glow)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 20px;box-shadow:0 0 40px rgba(0,255,156,.08);display:none}
+.card.show{display:block;animation:in .35s}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h2{margin:0 0 4px;font-size:22px;color:var(--g)}
+.sub{color:var(--mut);margin:0 0 18px}
+.timer{height:6px;background:#1c1c20;border-radius:3px;overflow:hidden;margin-bottom:18px}
+.timer b{display:block;height:100%;width:100%;background:var(--g);box-shadow:0 0 10px var(--glow)}
+.url{direction:ltr;text-align:left;background:#000;border:1px solid #333;border-radius:8px;padding:12px 14px;font-family:Consolas,monospace;font-size:15px;word-break:break-all;margin-bottom:18px}
+.url span{color:var(--ok)}
+.term{font-family:"Share Tech Mono",monospace;color:var(--g);direction:ltr;margin-top:10px;font-size:14px}.term:after{content:"_";animation:bl 1s steps(1) infinite}@keyframes bl{50%{opacity:0}}
+.card{backdrop-filter:blur(3px)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+button{font:inherit;font-weight:700;cursor:pointer;border-radius:8px;padding:11px 20px;border:1px solid var(--g);background:transparent;color:var(--tx);transition:.2s;flex:1;min-width:130px}
+button:hover,button:focus-visible{background:var(--g);box-shadow:0 0 18px var(--glow);outline:none}
+button.solid{background:var(--g);color:#021a10}button.solid:hover{background:#5dffc0}
+.res{display:none;margin-top:18px;padding:14px 16px;border-radius:10px;border:1px solid}
+.res.bad{display:block;border-color:var(--bad);background:rgba(255,59,78,.1)}
+.res.good{display:block;border-color:var(--ok);background:rgba(0,255,156,.08)}
+.res strong{display:block;font-size:18px;margin-bottom:4px}
+.res ul{margin:8px 0 0;padding-inline-start:20px;color:#ddd}
+input[type=text]{width:100%;font:inherit;direction:ltr;text-align:left;background:#000;color:var(--tx);border:1px solid #333;border-radius:8px;padding:12px 14px;font-size:17px}
+input:focus{outline:none;border-color:var(--g);box-shadow:0 0 14px var(--glow)}
+.meter{height:10px;background:#1c1c20;border-radius:5px;margin:14px 0 8px;overflow:hidden}
+.meter b{display:block;height:100%;width:0;transition:.3s,background .3s}
+.crack{font-size:20px;font-weight:900}
+.checks{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0;padding:0;list-style:none;color:var(--mut);font-size:14px}
+.checks li{border:1px solid #333;border-radius:20px;padding:1px 12px}
+.checks li.ok{color:var(--ok);border-color:var(--ok)}
+.sms{background:#16161a;border-radius:14px 14px 14px 4px;padding:14px 16px;margin-bottom:6px;border:1px solid #2b2b31}
+.sms small{color:var(--mut);display:block;direction:ltr;text-align:left;margin-bottom:6px}
+.sms a{color:#5ab0ff;cursor:pointer;text-decoration:underline;direction:ltr;unicode-bidi:embed}
+.hot{display:inline;border-bottom:2px dashed var(--g);cursor:help}
+.final{text-align:center}
+.score{font-size:68px;font-weight:900;color:var(--g);text-shadow:0 0 30px var(--glow);line-height:1.1}
+.tag{font-size:13px;color:var(--mut);text-align:center;margin-top:28px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="rain"></canvas>
+<main>
+<header>
+  <div class="term">&gt; cyber_shield --scan awareness</div>
+  <h1>اختبر وعيك السيبراني</h1>
+  <p>٣ تحديات سريعة · مو كل رسالة تستاهل ثقتك</p>
+</header>
+<div class="bar" id="bar"><i class="on"></i><i></i><i></i></div>
+
+<!-- Intro -->
+<section class="card show" id="s0">
+  <h2>جاهز؟</h2>
+  <p class="sub">كل تحدي ما ياخذ أكثر من ١٥ ثانية. قرارك السريع هو خط دفاعك الأول.</p>
+  <div class="row"><button class="solid" onclick="go(1)">ابدأ الاختبار</button></div>
+</section>
+
+<!-- Challenge 1 -->
+<section class="card" id="s1">
+  <h2>التحدي الأول: فكّر قبل ما تضغط</h2>
+  <p class="sub">وصلك هذا الرابط برسالة "تحديث بيانات الحساب". عندك ١٠ ثواني تقرر.</p>
+  <div class="timer"><b id="tbar"></b></div>
+  <div class="url"><span>https://</span>bank-login-update.com/secure</div>
+  <div class="row">
+    <button onclick="c1('click')">أضغط الرابط</button>
+    <button class="solid" onclick="c1('skip')">أتجاهله وأبلّغ</button>
+  </div>
+  <div class="res" id="r1"></div>
+  <div class="row" style="margin-top:14px"><button class="solid" id="n1" style="display:none" onclick="go(2)">التحدي التالي</button></div>
+</section>
+
+<!-- Challenge 2 -->
+<section class="card" id="s2">
+  <h2>التحدي الثاني: كلمة المرور القوية</h2>
+  <p class="sub">اكتب كلمة مرور تظنها قوية، وشوف كم يحتاج مخترق لكسرها. (لا تكتب كلمة مرورك الحقيقية.)</p>
+  <input type="text" id="pw" placeholder="اكتب هنا..." autocomplete="off" spellcheck="false">
+  <div class="meter"><b id="mb"></b></div>
+  <div class="crack" id="ct">وقت الكسر: —</div>
+  <ul class="checks" id="ck">
+    <li data-k="len">١٢ حرفاً فأكثر</li><li data-k="up">حرف كبير</li><li data-k="low">حرف صغير</li><li data-k="num">رقم</li><li data-k="sym">رمز خاص</li><li data-k="com">ليست شائعة</li>
+  </ul>
+  <div class="row" style="margin-top:18px"><button class="solid" onclick="go(3)">التحدي التالي</button></div>
+</section>
+
+<!-- Challenge 3 -->
+<section class="card" id="s3">
+  <h2>التحدي الثالث: الرسائل المضلِّلة</h2>
+  <p class="sub">وصلتك هذه الرسالة. هل تثق فيها؟</p>
+  <div class="sms"><small>من: STC-Alert · الآن</small>
+    عزيزي العميل، <span class="hot" data-i="1">تم إيقاف حسابك</span> بسبب نشاط مشبوه. <span class="hot" data-i="2">سيتم إغلاقه نهائياً خلال ساعتين</span> ما لم تؤكد بياناتك:
+    <a data-i="3">http://stc-verify.help/login</a>
+  </div>
+  <div class="row" style="margin-top:14px">
+    <button onclick="c3(true)">أثق فيها وأضغط</button>
+    <button class="solid" onclick="c3(false)">رسالة احتيال</button>
+  </div>
+  <div class="res" id="r3"></div>
+  <div class="row" style="margin-top:14px"><button class="solid" id="n3" style="display:none" onclick="go(4)">اعرف نتيجتك</button></div>
+</section>
+
+<!-- Result -->
+<section class="card final" id="s4">
+  <h2>نتيجتك</h2>
+  <div class="score" id="sc">0/3</div>
+  <p class="sub" id="sm"></p>
+  <div class="row"><button class="solid" onclick="restart()">أعد المحاولة</button></div>
+</section>
+
+<p class="tag">Cyber Shield · الوعي أقوى جدار حماية</p>
+</main>
+
+<script>
+(function(){var c=$r=document.getElementById('rain'),x=c.getContext('2d');if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+var cols,drops,ch='01ABCDEF{}<>/#$%';function rs(){c.width=innerWidth;c.height=innerHeight;cols=Math.floor(c.width/16);drops=[];for(var i=0;i<cols;i++)drops[i]=Math.random()*c.height/16}rs();addEventListener('resize',rs);
+setInterval(function(){x.fillStyle='rgba(3,8,6,.15)';x.fillRect(0,0,c.width,c.height);x.fillStyle='#00ff9c';x.font='14px monospace';for(var i=0;i<cols;i++){x.fillText(ch[Math.floor(Math.random()*ch.length)],i*16,drops[i]*16);if(drops[i]*16>c.height&&Math.random()>.975)drops[i]=0;drops[i]++}},60)})();
+var score=0,cur=0,timer=null,done1=false;
+var $=function(i){return document.getElementById(i)};
+function go(n){
+  cur=n;
+  document.querySelectorAll('.card').forEach(function(c){c.classList.remove('show')});
+  $('s'+n).classList.add('show');
+  document.querySelectorAll('#bar i').forEach(function(b,i){b.classList.toggle('on',i<Math.max(n,1)&&n<4||n===4)});
+  if(n===1)startTimer();
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(n===4)finish();
+}
+function startTimer(){
+  var t=10,bar=$('tbar');done1=false;clearInterval(timer);
+  bar.style.transition='none';bar.style.width='100%';
+  setTimeout(function(){bar.style.transition='width 10s linear';bar.style.width='0%'},30);
+  timer=setInterval(function(){t--;if(t<=0){clearInterval(timer);if(!done1)c1('time')}},1000);
+}
+function box(el,cls,title,items){
+  el.className='res '+cls;
+  el.innerHTML='<strong>'+title+'</strong>'+(items?'<ul>'+items.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul>':'');
+}
+function c1(a){
+  if(done1)return;done1=true;clearInterval(timer);
+  var tips=['الدومين <b dir="ltr">bank-login-update.com</b> ليس موقع بنك حقيقي، فهو يضيف كلمات كثيرة ليبدو رسمياً.','البنوك الحقيقية لا ترسل روابط لتحديث بيانات الدخول.','اكتب عنوان البنك بنفسك أو افتح تطبيقه الرسمي.'];
+  if(a==='click'){box($('r1'),'bad','⚠ خطر تصيد احتيالي!',['كنت ستدخل بياناتك في صفحة مزيفة وتسلّمها للمحتال.'].concat(tips))}
+  else if(a==='skip'){score++;box($('r1'),'good','✔ قرار ذكي',tips)}
+  else{box($('r1'),'bad','⏱ انتهى الوقت',['التردد خطر أيضاً، والقاعدة: لا تضغط وتأكد من المصدر.'].concat(tips))}
+  $('n1').style.display='block';
+}
+/* password */
+var common=['password','123456','12345678','qwerty','admin','letmein','welcome','iloveyou','abc123','111111','password1','000000'];
+function fmt(s){
+  if(s<1)return 'أقل من ثانية';
+  var u=[[3.15e9,'مليار سنة'],[3.15e7,'سنة'],[86400,'يوم'],[3600,'ساعة'],[60,'دقيقة'],[1,'ثانية']];
+  if(s>3.15e16)return 'أكثر من مليار سنة';
+  for(var i=0;i<u.length;i++){if(s>=u[i][0])return Math.floor(s/u[i][0]).toLocaleString('ar-SA')+' '+u[i][1]}
+}
+function evalPw(){
+  var p=$('pw').value,st={len:p.length>=12,up:/[A-Z]/.test(p),low:/[a-z]/.test(p),num:/\d/.test(p),sym:/[^A-Za-z0-9]/.test(p),com:p.length>0&&common.indexOf(p.toLowerCase())<0&&!/^(.)\1+$/.test(p)};
+  document.querySelectorAll('#ck li').forEach(function(l){l.classList.toggle('ok',st[l.dataset.k])});
+  if(!p){$('mb').style.width='0';$('ct').textContent='وقت الكسر: —';return}
+  var pool=(st.low?26:0)+(st.up?26:0)+(st.num?10:0)+(st.sym?33:0);if(!pool)pool=26;
+  var secs=Math.pow(pool,p.length)/1e10/2;
+  if(!st.com)secs=0;
+  var lvl=secs<60?0:secs<3.15e7?1:secs<3.15e9?2:3;
+  var cols=['#ff2a3d','#ff8a2a','#e8d02f','#2fe08a'],w=[20,50,75,100];
+  $('mb').style.width=w[lvl]+'%';$('mb').style.background=cols[lvl];
+  $('ct').style.color=cols[lvl];
+  $('ct').textContent='وقت الكسر: '+fmt(secs);
+}
+$('pw').addEventListener('input',evalPw);
+/* sms */
+function c3(trust){
+  var clues=['التهديد بإيقاف الحساب هدفه إخافتك.','الاستعجال "خلال ساعتين" يمنعك من التفكير.','الرابط <b dir="ltr">stc-verify.help</b> دومين غريب وليس الموقع الرسمي.','المصدر الحقيقي لا يطلب تأكيد البيانات عبر رابط في رسالة.'];
+  document.querySelectorAll('.sms [data-i]').forEach(function(e){e.style.outline='2px solid var(--bad)';e.style.borderRadius='4px'});
+  if(trust){box($('r3'),'bad','⚠ خدعة! مو كل رسالة تستاهل ثقتك',clues)}
+  else{score++;box($('r3'),'good','✔ أحسنت! كشفت الخداع',clues)}
+  $('n3').style.display='block';
+}
+function finish(){
+  $('sc').textContent=score+'/3';
+  $('sm').textContent=score===3?'درع سيبراني حقيقي! شارك الوعي مع أهلك وأصدقائك.':score===2?'وعيك جيد، بس انتبه للتفاصيل الصغيرة.':'ما عليك، الاحتيال يخدع الكثيرين. راجع التلميحات وجرّب مرة ثانية.';
+}
+function restart(){
+  score=0;$('r1').className='res';$('r3').className='res';$('n1').style.display='none';$('n3').style.display='none';
+  $('pw').value='';evalPw();
+  document.querySelectorAll('.sms [data-i]').forEach(function(e){e.style.outline=''});
+  go(1);
+}
+</script>
+</body>
+</html>
